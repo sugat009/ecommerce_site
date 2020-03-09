@@ -13,13 +13,47 @@ const config = {
     measurementId: "G-Z16T25EC8E"
 };
 
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    // If no userAuth object passed i.e. not logged in then return
+    if (!userAuth) return;
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    const snapShot = await userRef.get();
+    console.log(snapShot);
+    // Checks if user already exists or not
+    if (!snapShot.exists) {
+        const {displayName, email} = userAuth;
+        const createdAt = new Date();
+
+        try {
+            // Asynchronously creating user in the database
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            })
+        } catch (e) {
+            console.log("Error creating user");
+            console.log(e)
+        }
+    }
+    return userRef;
+};
+
+// Initializing the firebase module
 firebase.initializeApp(config);
 
+// Firebase authentication module
 export const auth = firebase.auth();
+// Firebase database access module
 export const firestore = firebase.firestore();
 
+// For google authentication
 const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
+// Options for signing in using google
+provider.setCustomParameters({prompt: 'select_account'});
+// New window pop up
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;
