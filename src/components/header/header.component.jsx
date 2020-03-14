@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 
 import "./header.styles.scss";
 import {Link} from "react-router-dom";
@@ -32,4 +33,10 @@ const Header = ({currentUser}) => {
     );
 };
 
-export default Header;
+// here state is the top level root reducer
+const mapStateToProps = (state) => ({
+    currentUser: state.user.currentUser
+});
+
+// connect() is a HOC that modifies our component to have access to the redux objects
+export default connect(mapStateToProps)(Header);
