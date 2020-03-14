@@ -5,6 +5,7 @@ import "./header.styles.scss";
 import {Link} from "react-router-dom";
 import {ReactComponent as Logo} from "../../assets/crown.svg";
 import {auth} from '../../firebase/firebase.utils';
+import CartIcon from "../cart-icon/cart-icon.component";
 
 const Header = ({currentUser}) => {
     return (
@@ -21,13 +22,14 @@ const Header = ({currentUser}) => {
                 </Link>
                 {
                     currentUser ?
-                        <div className="option" onClick={() => auth.signOut()}>
+                        (<div className="option" onClick={() => auth.signOut()}>
                             SIGN OUT
-                        </div> :
-                        <Link to="/signin" className="option">
+                        </div>) :
+                        (<Link to="/signin" className="option">
                             SIGN IN
-                        </Link>
+                        </Link>)
                 }
+                <CartIcon/>
             </div>
         </div>
     );
