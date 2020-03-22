@@ -4,10 +4,9 @@ import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 
 import store from "./redux/store";
-
-import "./index.css";
 import App from "./App";
 
+import "./index.css";
 
 ReactDOM.render(
     // Provider is the main component object from react-redux that takes in the redux store
