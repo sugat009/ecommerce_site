@@ -12,6 +12,7 @@ import {createStructuredSelector} from "reselect";
 import {selectCurrentUser} from "./redux/user/user.selectors";
 
 import "./App.css";
+import CheckoutPage from "./pages/checkout/checkout.component";
 
 class App extends Component {
     // Subscription for the user authentication
@@ -54,6 +55,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={Homepage}/>
                     <Route path="/shop" component={ShopPage}/>
+                    <Route exact path="/checkout" component={CheckoutPage}/>
                     <Route
                         exact
                         path="/signin"
