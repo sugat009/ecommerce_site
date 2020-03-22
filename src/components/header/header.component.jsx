@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {createStructuredSelector} from "reselect";
 
-import {auth} from '../../firebase/firebase.utils';
+import {auth} from "../../firebase/firebase.utils";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import {selectCurrentUser} from "../../redux/user/user.selectors";
@@ -25,22 +25,18 @@ const Header = ({currentUser, hidden}) => {
                 <Link className="option" to="/shop">
                     CONTACT
                 </Link>
-                {
-                    currentUser ?
-                        (<div className="option" onClick={() => auth.signOut()}>
-                            SIGN OUT
-                        </div>) :
-                        (<Link to="/signin" className="option">
-                            SIGN IN
-                        </Link>)
-                }
+                {currentUser ? (
+                    <div className="option" onClick={() => auth.signOut()}>
+                        SIGN OUT
+                    </div>
+                ) : (
+                    <Link to="/signin" className="option">
+                        SIGN IN
+                    </Link>
+                )}
                 <CartIcon/>
             </div>
-            {
-                hidden ?
-                    null :
-                    <CartDropdown/>
-            }
+            {hidden ? null : <CartDropdown/>}
         </div>
     );
 };

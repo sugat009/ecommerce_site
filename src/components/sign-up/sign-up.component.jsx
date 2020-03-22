@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import {auth, createUserProfileDocument} from "../../firebase/firebase.utils";
 
-import './sign-up.styles.scss';
+import "./sign-up.styles.scss";
 
 class SignUp extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class SignUp extends Component {
             email: "",
             password: "",
             confirmPassword: ""
-        }
+        };
     }
 
     handleSubmit = async event => {
@@ -29,7 +29,10 @@ class SignUp extends Component {
         }
 
         try {
-            const {user} = await auth.createUserWithEmailAndPassword(email, password);
+            const {user} = await auth.createUserWithEmailAndPassword(
+                email,
+                password
+            );
 
             await createUserProfileDocument(user, {displayName});
 
@@ -94,9 +97,7 @@ class SignUp extends Component {
                         required
                     />
 
-                    <CustomButton type="submit">
-                        SIGN UP
-                    </CustomButton>
+                    <CustomButton type="submit">SIGN UP</CustomButton>
                 </form>
             </div>
         );

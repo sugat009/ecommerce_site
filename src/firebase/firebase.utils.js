@@ -1,6 +1,6 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
 
 const config = {
     apiKey: "AIzaSyC2A9ERYPsbiLR1C-hHqw0JnzouuqYQoD8",
@@ -32,10 +32,10 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
                 email,
                 createdAt,
                 ...additionalData
-            })
+            });
         } catch (e) {
             console.log("Error creating user");
-            console.log(e)
+            console.log(e);
         }
     }
     return userRef;
@@ -52,7 +52,7 @@ export const firestore = firebase.firestore();
 // For google authentication
 const provider = new firebase.auth.GoogleAuthProvider();
 // Options for signing in using google
-provider.setCustomParameters({prompt: 'select_account'});
+provider.setCustomParameters({prompt: "select_account"});
 // New window pop up
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 

@@ -1,4 +1,4 @@
-import {createSelector} from 'reselect';
+import {createSelector} from "reselect";
 
 // Input selector that gives out user from the state
 const selectUser = state => state.user;
@@ -7,5 +7,5 @@ const selectUser = state => state.user;
 // from where it is called
 export const selectCurrentUser = createSelector(
     [selectUser],
-    (user) => user.currentUser
+    user => user.currentUser
 );
