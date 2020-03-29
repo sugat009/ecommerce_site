@@ -4,15 +4,15 @@ import {connect} from "react-redux";
 import {selectCollection} from "../../redux/shop/shop.selectors";
 import CollectionItem from "../../components/collection-item/collection-item.components";
 
-import {CollectionPageContainer, ItemContainer, TitleContainer} from "./collection.styles";
+import {CollectionItemsContainer, CollectionPageContainer, CollectionTitle} from "./collection.styles";
 
 const CollectionPage = ({collection}) => {
     const {title, items} = collection;
 
     return (
         <CollectionPageContainer>
-            <TitleContainer>{title}</TitleContainer>
-            <ItemContainer>
+            <CollectionTitle>{title}</CollectionTitle>
+            <CollectionItemsContainer>
                 {
                     items.map(item => (
                         <CollectionItem
@@ -21,7 +21,7 @@ const CollectionPage = ({collection}) => {
                         />
                     ))
                 }
-            </ItemContainer>
+            </CollectionItemsContainer>
         </CollectionPageContainer>
     );
 };
