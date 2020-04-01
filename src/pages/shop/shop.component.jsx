@@ -23,7 +23,25 @@ class ShopPage extends Component {
         const {updateCollections} = this.props;
         const collectionRef = firestore.collection('collections');
 
-        collectionRef.onSnapshot(async snapshot => {
+        // This is what is called the observables / observer pattern
+        // the function inside onSnapshot() is called next()
+        // On error is the part which is executed when error occurs(not implemented here)
+        // For firebase there is no onFinish
+        // Here, observable is the firebase database
+        // the observer is our firebase API object
+        // collectionRef.onSnapshot(async snapshot => {
+        //     updateCollections(convertCollectionsSnapshotToMap(snapshot));
+        //     // This setState call changes the state of this component which causes the
+        //     // ReactDOM to re-render or recall the render method but this time the loading
+        //     // is false so the components are displayed with data
+        //     this.setState({
+        //         loading: false
+        //     });
+        // });
+
+        // This is what is known to the promise pattern where the data is request once only
+        // when the component is mounted
+        collectionRef.get().then(snapshot => {
             updateCollections(convertCollectionsSnapshotToMap(snapshot));
             // This setState call changes the state of this component which causes the
             // ReactDOM to re-render or recall the render method but this time the loading
@@ -32,6 +50,11 @@ class ShopPage extends Component {
                 loading: false
             });
         });
+
+        // This is a native request to the API URL
+        // fetch("https://firestore.googleapis.com/v1/projects/ecommerce-db-ad249/databases/(default)/documents/collections/")
+        //     .then(response => response.json())
+        //     .then(collections => console.log(collections));
     }
 
     render() {
