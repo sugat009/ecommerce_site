@@ -11,6 +11,7 @@ import {selectCurrentUser} from "./redux/user/user.selectors";
 
 import "./App.css";
 import CheckoutPage from "./pages/checkout/checkout.component";
+import {checkUserSession} from "./redux/user/user.actions";
 
 class App extends Component {
     // Subscription for the user authentication
@@ -36,6 +37,9 @@ class App extends Component {
         //         setCurrentUser(userAuth);
         //     }
         // });
+        const {checkUserSession} = this.props;
+
+        checkUserSession();
     }
 
     componentWillUnmount() {
@@ -84,13 +88,13 @@ class App extends Component {
 // the argument {dispatch} in this function actually calls the root reducer with the object
 // before reducing, we call our action function to get the proper object that is needed by
 // the reducer in question, in this case the setCurrentUser
-// const mapDispatchToProps = dispatch => ({
-//     setCurrentUser: user => dispatch(setCurrentUser(user))
-// });
+const mapDispatchToProps = dispatch => ({
+    checkUserSession: () => dispatch(checkUserSession())
+});
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser
 });
 
 // IF we dont need state as props in this component we set the first argument as null
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
