@@ -1,4 +1,4 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
+import {call, put, takeLatest} from 'redux-saga/effects';
 
 import ShopActionTypes from "./shop.types";
 import {convertCollectionsSnapshotToMap, firestore} from "../../firebase/firebase.utils";
@@ -34,5 +34,9 @@ export function* fetchCollectionsAsync() {
 // the second parameter is the function that is to be fired once that action is caught
 // also the function must be generator type
 export function* fetchCollectionsStart() {
-    yield takeEvery(ShopActionTypes.FETCH_COLLECTIONS_START, fetchCollectionsAsync);
+    // On a side note takeEvery() spawns a new saga every time the action gets caught
+    // take() on gets the action once
+    // takeLatest() on fires the latest action if mutiple actions are fired before the previous action
+    // has completed
+    yield takeLatest(ShopActionTypes.FETCH_COLLECTIONS_START, fetchCollectionsAsync);
 }
