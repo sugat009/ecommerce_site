@@ -5,7 +5,7 @@ import UserActionTypes from "./user.types";
 // NOTE: the type of this action function is exactly same as that of user.reducer.js
 // because this action needs to work only with the user.reducer.js
 export const googleSignInStart = () => ({
-   type: UserActionTypes.GOOGLE_SIGN_IN_START
+    type: UserActionTypes.GOOGLE_SIGN_IN_START
 });
 
 export const signInSuccess = (user) => ({
@@ -37,5 +37,20 @@ export const signOutSuccess = () => ({
 
 export const signOutFailure = (error) => ({
     type: UserActionTypes.SIGN_OUT_FAILURE,
+    payload: error
+});
+
+export const signUpStart = (userCredentials) => ({
+    type: UserActionTypes.SIGN_UP_START,
+    payload: userCredentials
+});
+
+export const signUpSuccess = ({user, additionalData}) => ({
+    type: UserActionTypes.SIGN_UP_SUCCESS,
+    payload: {user, additionalData}
+});
+
+export const signUpFailure = (error) => ({
+    type: UserActionTypes.SIGN_UP_FAILURE,
     payload: error
 });
