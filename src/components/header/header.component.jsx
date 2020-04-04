@@ -1,8 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
-
-import {auth} from "../../firebase/firebase.utils";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import {selectCurrentUser} from "../../redux/user/user.selectors";
@@ -10,8 +8,9 @@ import {selectCartHidden} from "../../redux/cart/cart.selectors";
 
 import {ReactComponent as Logo} from "../../assets/crown.svg";
 import {HeaderContainer, LogoContainer, OptionLink, OptionsContainer} from "./header.styles";
+import {signOutStart} from "../../redux/user/user.actions";
 
-const Header = ({currentUser, hidden}) => {
+const Header = ({currentUser, hidden, startSignOut}) => {
     return (
         <HeaderContainer>
             <LogoContainer to="/">
@@ -27,7 +26,7 @@ const Header = ({currentUser, hidden}) => {
                 {currentUser ? (
                     <OptionLink
                         as="div"
-                        onClick={() => auth.signOut()}
+                        onClick={startSignOut}
                     >
                         SIGN OUT
                     </OptionLink>
@@ -52,5 +51,9 @@ const mapStateToProps = createStructuredSelector({
     hidden: selectCartHidden
 });
 
+const mapDispatchToProps = dispatch => ({
+    startSignOut: () => dispatch(signOutStart())
+});
+
 // connect() is a HOC that modifies our component to have access to the redux objects
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
