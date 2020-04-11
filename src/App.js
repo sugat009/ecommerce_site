@@ -14,9 +14,6 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 import {checkUserSession} from "./redux/user/user.actions";
 
 class App extends Component {
-    // Subscription for the user authentication
-    unsubscribeFromAuth = null;
-
     componentDidMount() {
         // When the component is mounted it checks whether or not the user is signed in
         // or signed out
@@ -40,12 +37,6 @@ class App extends Component {
         const {checkUserSession} = this.props;
 
         checkUserSession();
-    }
-
-    componentWillUnmount() {
-        // calling the onAuthStateChange method once the App component is unmounted to
-        // prevent memory leaks
-        this.unsubscribeFromAuth();
     }
 
     render() {
