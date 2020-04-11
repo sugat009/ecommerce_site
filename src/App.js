@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useEffect} from "react";
 import {Redirect, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 
@@ -13,8 +13,8 @@ import "./App.css";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import {checkUserSession} from "./redux/user/user.actions";
 
-class App extends Component {
-    componentDidMount() {
+const App = ({checkUserSession, currentUser}) => {
+    useEffect(() => {
         // When the component is mounted it checks whether or not the user is signed in
         // or signed out
         // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
@@ -34,46 +34,42 @@ class App extends Component {
         //         setCurrentUser(userAuth);
         //     }
         // });
-        const {checkUserSession} = this.props;
-
         checkUserSession();
-    }
+    }, [checkUserSession]);
 
-    render() {
-        return (
-            <div>
-                <Header/>
-                <Switch>
-                    <Route
-                        exact
-                        path="/"
-                        component={Homepage}
-                    />
-                    <Route
-                        path="/shop"
-                        component={ShopPage}
-                    />
-                    <Route
-                        exact
-                        path="/checkout"
-                        component={CheckoutPage}
-                    />
-                    <Route
-                        exact
-                        path="/signin"
-                        render={() =>
-                            this.props.currentUser ? (
-                                <Redirect to="/"/>
-                            ) : (
-                                <SignInAndSignUpPage/>
-                            )
-                        }
-                    />
-                </Switch>
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            <Header/>
+            <Switch>
+                <Route
+                    exact
+                    path="/"
+                    component={Homepage}
+                />
+                <Route
+                    path="/shop"
+                    component={ShopPage}
+                />
+                <Route
+                    exact
+                    path="/checkout"
+                    component={CheckoutPage}
+                />
+                <Route
+                    exact
+                    path="/signin"
+                    render={() =>
+                        currentUser ? (
+                            <Redirect to="/"/>
+                        ) : (
+                            <SignInAndSignUpPage/>
+                        )
+                    }
+                />
+            </Switch>
+        </div>
+    );
+};
 
 // mapDispatchToProps is a function that is used for dispatching actions to the store
 // the argument {dispatch} in this function actually calls the root reducer with the object
