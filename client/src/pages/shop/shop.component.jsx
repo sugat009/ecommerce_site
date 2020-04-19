@@ -1,10 +1,12 @@
-import React, {useEffect} from "react";
+import React, {lazy, Suspense, useEffect} from "react";
 import {Route} from "react-router-dom";
 import {connect} from "react-redux";
 
+import Spinner from "../../components/spinner/spinner.component";
 import {fetchCollectionsStart} from "../../redux/shop/shop.actions";
-import CollectionsOverviewContainer from "../../components/collections-overview/collections-overview.container";
-import CollectionPageContainer from "../collection/collection.container";
+
+const CollectionsOverviewContainer = lazy(() => import("../../components/collections-overview/collections-overview.container"));
+const CollectionPageContainer = lazy(() => import("../collection/collection.container"));
 
 const ShopPage = ({fetchCollectionsStart, match}) => {
     useEffect(() => {
@@ -54,16 +56,18 @@ const ShopPage = ({fetchCollectionsStart, match}) => {
             {/* does not need to know which route it lies in */}
             {/* render prop is similar to that of component except that the props like match, history and route */}
             {/* need to be explicitly passed into the rendering component */}
-            <Route
-                exact
-                path={`${match.path}`}
-                component={CollectionsOverviewContainer}
-            />
-            {/* NOTE: collectionID is not integer but a string like hats, jackets, etc. */}
-            <Route
-                path={`${match.path}/:collectionId`}
-                component={CollectionPageContainer}
-            />
+            <Suspense fallback={<Spinner/>}>
+                <Route
+                    exact
+                    path={`${match.path}`}
+                    component={CollectionsOverviewContainer}
+                />
+                {/* NOTE: collectionID is not integer but a string like hats, jackets, etc. */}
+                <Route
+                    path={`${match.path}/:collectionId`}
+                    component={CollectionPageContainer}
+                />
+            </Suspense>
         </div>
     );
 };
